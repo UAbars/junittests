@@ -24,7 +24,9 @@ pipeline {
 
         stage('Test'){
             steps{
-                sh 'cd src/ ; java -jar ../lib/junit-platform-console-standalone-1.7.0-all.jar -cp "." --select-class CarTest --reports-dir="reports"'
+                catchError(buildResult: 'SUCESS', stageResult: 'FAILURE'){
+                    sh 'cd src/ ; java -jar ../lib/junit-platform-console-standalone-1.7.0-all.jar -cp "." --select-class CarTest --reports-dir="reports"'
+                }
                 junit 'src/reports/*-jupiter.xml'
                 influxDbPublisher(selectedTarget: 'Junittest-report')
             }
