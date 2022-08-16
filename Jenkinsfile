@@ -24,7 +24,7 @@ pipeline {
 
         stage('Test'){
             steps{
-                catchError(buildResult: 'SUCESS', stageResult: 'FAILURE'){
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE'){
                     sh 'cd src/ ; java -jar ../lib/junit-platform-console-standalone-1.7.0-all.jar -cp "." --select-class CarTest --reports-dir="reports"'
                 }
                 junit 'src/reports/*-jupiter.xml'
